@@ -46,27 +46,35 @@
                         ></v-text-field>
                     </v-card-title>
                     <v-card-text>
-                        <v-list subheader>
-                            <v-subheader>ToDos List</v-subheader>
-                            <v-list-item
+                        <v-timeline
+                            v-if="tasks.length > 0"
+                            dense
+                            clipped
+                        >
+                            <v-timeline-item
                                 v-for="(t, index) in tasks"
                                 :key="index"
                             >
-                                <v-list-item-content>
-                                    <v-list-item-title v-text="t"></v-list-item-title>
-                                </v-list-item-content>
-                                <v-list-item-action>
-                                    <v-btn
-                                        icon
-                                        @click="removeTask(index)"
+                                <v-row class="display-1 text-capitalize">
+                                    <v-col cols="7">
+                                        {{ t }}
+                                    </v-col>
+                                    <v-col
+                                        class="text-right"
+                                        cols="5"
                                     >
-                                        <v-icon color="red lighten-1">
-                                            mdi-sticker-remove
-                                        </v-icon>
-                                    </v-btn>
-                                </v-list-item-action>
-                            </v-list-item>
-                        </v-list>
+                                        <v-btn
+                                            icon
+                                            @click="removeTask(index)"
+                                        >
+                                            <v-icon color="red lighten-1" large>
+                                                mdi-sticker-remove
+                                            </v-icon>
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                            </v-timeline-item>
+                        </v-timeline>
                     </v-card-text>
                 </v-card>
             </v-container>
@@ -80,7 +88,7 @@ export default {
     name: 'App',
 
     data: () => ({
-        tasks: [],
+        tasks: ['task 1'],
         newTask: null
     }),
     methods: {
