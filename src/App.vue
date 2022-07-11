@@ -30,23 +30,46 @@
         </v-app-bar>
 
         <v-main>
-            <v-card elevation="2">
-                <v-card-title>
-                    <v-text-field
-                        v-model="newTask"
-                        append-outer-icon="mdi-content-save"
-                        clear-icon="mdi-close-circle"
-                        clearable
-                        filled
-                        type="text"
-                        @click:append-outer="addTask"
-                        @click:clear="clearTask"
-                    ></v-text-field>
-                </v-card-title>
-                <v-card-text>
-                    {{ tasks }}
-                </v-card-text>
-            </v-card>
+            <v-container>
+                <v-card elevation="0">
+                    <v-card-title>
+                        <v-text-field
+                            v-model="newTask"
+                            label="Task Name"
+                            prepend-icon="mdi-content-save"
+                            clear-icon="mdi-close-circle"
+                            clearable
+                            filled
+                            type="text"
+                            @click:prepend="addNewTask"
+                            @click:clear="clearNewTask"
+                        ></v-text-field>
+                    </v-card-title>
+                    <v-card-text>
+                        <v-list subheader>
+                            <v-subheader>ToDos List</v-subheader>
+                            <v-list-item
+                                v-for="(t, index) in tasks"
+                                :key="index"
+                            >
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="t"></v-list-item-title>
+                                </v-list-item-content>
+                                <v-list-item-action>
+                                    <v-btn
+                                        icon
+                                        @click="removeTask(index)"
+                                    >
+                                        <v-icon color="red lighten-1">
+                                            mdi-sticker-remove
+                                        </v-icon>
+                                    </v-btn>
+                                </v-list-item-action>
+                            </v-list-item>
+                        </v-list>
+                    </v-card-text>
+                </v-card>
+            </v-container>
         </v-main>
     </v-app>
 </template>
@@ -61,12 +84,15 @@ export default {
         newTask: null
     }),
     methods: {
-        addTask() {
+        addNewTask() {
             this.tasks.push(this.newTask);
-            this.clearTask();
+            this.clearNewTask();
         },
-        clearTask() {
+        clearNewTask() {
             this.newTask = '';
+        },
+        removeTask(i) {
+            this.tasks.splice(i, 1);
         }
     }
 };
